@@ -1,4 +1,4 @@
-package laweadelcoso.proyectofinalcompiladores.AnalizadorLexico;
+package src.AnalizadorLexicoSQL;
 
 public class Token {
 

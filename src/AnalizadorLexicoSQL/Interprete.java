@@ -1,4 +1,4 @@
-package laweadelcoso.proyectofinalcompiladores.AnalizadorLexico;
+package src.AnalizadorLexicoSQL;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,10 +7,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-
-//Bien, veamos si esto se acaba en un día.
-//Al final son sólo programar algunos autómatas... Creo
-
 
 public class Interprete {
 
