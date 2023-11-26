@@ -9,6 +9,12 @@ public class Scanner {
 
     // Mapa que asocia palabras reservadas con sus tipos de tokens correspondientes
     private static final Map<String, TipoToken> palabrasReservadas;
+    private final String source;
+    private final List<Token> tokens = new ArrayList<>();
+
+    public Scanner(String source) {
+        this.source = source + " ";
+    }
 
     static {
         palabrasReservadas = new HashMap<>();
@@ -17,20 +23,13 @@ public class Scanner {
         palabrasReservadas.put("FROM", TipoToken.FROM);
     }
 
-    private final String source;
-    private final List<Token> tokens = new ArrayList<>();
-
-    public Scanner(String source) {
-        this.source = source + " ";
-    }
-
     public List<Token> scan() throws Exception {
 
-        int estado = 0, linea = 0;
+        int estado = 0, linea = 0, i = 0;
         String lexema = "";
         char c;
 
-        for (int i = 0; i < source.length(); i++) {
+        for (i = 0; i < source.length(); i++) {
             
             c = source.charAt(i);
             
@@ -42,13 +41,62 @@ public class Scanner {
                 
                 case 0:
 
+                    if(c == '*'){
+                        tokens.add(new Token(TipoToken.STAR, "*", i + 1));
+                    }
+                    else if(c == ','){
+                        tokens.add(new Token(TipoToken.COMMA, ",", i + 1));
+                    }
+                    else if(c == '.'){
+                        tokens.add(new Token(TipoToken.DOT, ".", i + 1));
+                    }
+                    else if(Character.isAlphabetic(c)){
 
+                        estado = 1;
+                        lexema += c;
+
+                    }
 
                     break;
 
+                case 1:
+
+                    if(Character.isLetterOrDigit(c) || isSpecialCharacter(c)){
+
+                        lexema += c;
+
+                    }else{
+
+                        TipoToken tt = palabrasReservadas.get(lexema);
+
+                        if(lexema == null){
+
+                            Token t = new Token(TipoToken.IDENTIFIER, lexema);
+                            tokens.add(t);
+
+                        }else{
+
+                            Token t = new Token(tt, lexema);
+                            tokens.add(t);
+
+                        }
+
+                        estado = 0;
+                        lexema = "";
+                        i--;
+
+                    }
+
+                    break;
             }
         }
 
         return tokens;
+    }
+
+    private boolean isSpecialCharacter(char c) {
+
+        return c == '"' || c == '-' || c == '_';
+
     }
 }
