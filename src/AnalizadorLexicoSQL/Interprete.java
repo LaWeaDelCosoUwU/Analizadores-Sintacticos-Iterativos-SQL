@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import src.AnalizadorSintacticoDescendenteIterativo.ASDI;
+
 public class Interprete {
 
     static boolean existenErrores = false;
@@ -75,6 +77,9 @@ public class Interprete {
             for (Token token : tokens) {
                 System.out.println(token);
             }
+
+            ASDI asdi = new ASDI(tokens);
+            asdi.analizar();
             
         } catch (Exception ex) {
             ex.printStackTrace(); // Imprime la traza de la excepción en caso de error

@@ -50,7 +50,7 @@ public class Scanner {
                     else if(c == '.'){
                         tokens.add(new Token(TipoToken.DOT, ".", i + 1));
                     }
-                    else if(Character.isAlphabetic(c)){
+                    else if(Character.isAlphabetic(c) || Character.isDigit(c)){
 
                         estado = 1;
                         lexema += c;
@@ -69,7 +69,7 @@ public class Scanner {
 
                         TipoToken tt = palabrasReservadas.get(lexema);
 
-                        if(lexema == null){
+                        if(tt == null){
 
                             Token t = new Token(TipoToken.IDENTIFIER, lexema);
                             tokens.add(t);
