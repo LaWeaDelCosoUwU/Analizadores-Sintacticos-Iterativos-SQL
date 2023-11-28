@@ -19,19 +19,18 @@ public class ASDI {
 
         this.tokens = tokens;
 
-        //  NoTer\Ter  | SELECT | DISTINCT | * | id | . | , | FROM | $ |
-        //tabla.put(" ", crearFila("SELECT", "DISTINCT", "*", "id", ".", ",", "FROM", "$"));
-        tabla.put("Q", crearFila("SELECT D FROM T", "ERROR", "ERROR", "ERROR", "ERROR", "ERROR", "ERROR", "ERROR"));
-        tabla.put("D", crearFila("ERROR", "DISTINCT D", "P", "P", "ERROR", "ERROR", "ERROR", "ERROR"));
-        tabla.put("P", crearFila("ERROR", "ERROR", "*", "A", "ERROR", "ERROR", "ERROR", "ERROR"));
-        tabla.put("A", crearFila("ERROR", "ERROR", "ERROR", "A2 A1", "ERROR", "ERROR", "ERROR", "ERROR"));
-        tabla.put("A1", crearFila("ERROR", "ERROR", "ERROR", "ERROR", "ERROR", ", A", "EPS", "ERROR"));
-        tabla.put("A2", crearFila("ERROR", "ERROR", "ERROR", "id A3", "ERROR", "ERROR", "ERROR", "ERROR"));
-        tabla.put("A3", crearFila("ERROR", "ERROR", "ERROR", "ERROR", ". id", "EPS", "EPS", "ERROR"));
-        tabla.put("T", crearFila("ERROR", "ERROR", "ERROR", "T1 T2", "ERROR", "ERROR", "ERROR", "ERROR"));
-        tabla.put("T1", crearFila("ERROR", "ERROR", "ERROR", "ERROR", "ERROR", ", T", "ERROR", "EPS"));
-        tabla.put("T2", crearFila("ERROR", "ERROR", "ERROR", "id T3", "ERROR", "ERROR", "ERROR", "ERROR"));
-        tabla.put("T3", crearFila("ERROR", "ERROR", "ERROR", "id", "EPS", "ERROR", "ERROR", "EPS"));
+        //        NoTer\Ter              | SELECT            | DISTINCT     | *          | id         | .          | ,          | FROM     | $     |
+        tabla.put("Q", crearFila("SELECT D FROM T", "ERROR",       "ERROR",     "ERROR",     "ERROR",     "ERROR",     "ERROR",   "ERROR"));
+        tabla.put("D", crearFila("ERROR",           "DISTINCT D",  "P",         "P",         "ERROR",     "ERROR",     "ERROR",   "ERROR"));
+        tabla.put("P", crearFila("ERROR",           "ERROR",       "*",         "A",         "ERROR",     "ERROR",     "ERROR",   "ERROR"));
+        tabla.put("A", crearFila("ERROR",           "ERROR",       "ERROR",     "A2 A1",     "ERROR",     "ERROR",     "ERROR",   "ERROR"));
+        tabla.put("A1", crearFila("ERROR",          "ERROR",       "ERROR",     "ERROR",     "ERROR",     ", A",       "EPS",     "ERROR"));
+        tabla.put("A2", crearFila("ERROR",          "ERROR",       "ERROR",     "id A3",     "ERROR",     "ERROR",     "ERROR",   "ERROR"));
+        tabla.put("A3", crearFila("ERROR",          "ERROR",       "ERROR",     "ERROR",     ". id",      "EPS",       "EPS",     "ERROR"));
+        tabla.put("T", crearFila("ERROR",           "ERROR",       "ERROR",     "T1 T2",     "ERROR",     "ERROR",     "ERROR",   "ERROR"));
+        tabla.put("T1", crearFila("ERROR",          "ERROR",       "ERROR",     "ERROR",     "ERROR",     ", T",       "ERROR",   "EPS"));
+        tabla.put("T2", crearFila("ERROR",          "ERROR",       "ERROR",     "id T3",     "ERROR",     "ERROR",     "ERROR",   "ERROR"));
+        tabla.put("T3", crearFila("ERROR",          "ERROR",       "ERROR",     "id",        "EPS",       "ERROR",     "ERROR",   "EPS"));
 
     }
 
@@ -60,6 +59,13 @@ public class ASDI {
 
         while(!pila.peek().equals("$")) {
 
+            if(i == tokens.size()-1){
+
+                System.out.println("No Jala");
+                return;
+
+            }
+
             if (tokens.get(i).getTipo() == TipoToken.SELECT){
                 column = "SELECT";
             }else if (tokens.get(i).getTipo() == TipoToken.DISTINCT){
@@ -78,20 +84,23 @@ public class ASDI {
                 column = "$";
             }
 
-            objetoPila = pila.pop();
-            busquedaTabla = tabla.get(objetoPila).get(column);
+            if(pila.peek().equals(column)){
 
-            if(objetoPila.equals(busquedaTabla))
+                pila.pop();
                 i++;
-
-            if(busquedaTabla.equals("ERROR")){
-                System.out.println("No jala");
-                return;
-            } else if(busquedaTabla.equals("EPS")){
 
             }else{
 
-                if(busquedaTabla.indexOf(' ') != -1){
+                objetoPila = pila.pop();
+                busquedaTabla = tabla.get(objetoPila).get(column);
+
+
+                if(busquedaTabla.equals("ERROR")){
+                    System.out.println("No jala");
+                    return;
+                } else if(busquedaTabla.equals("EPS")){
+
+                }else if(busquedaTabla.indexOf(' ') != -1){
 
                     cadenaDividida = busquedaTabla.split(" ");
 
