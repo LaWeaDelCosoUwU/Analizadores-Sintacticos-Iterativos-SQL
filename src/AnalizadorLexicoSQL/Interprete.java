@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import src.AnalizadorSintacticoDescendenteIterativo.ASDI;
+import src.AnalizadorSintacticoConAutomata.ASCA;
 
 public class Interprete {
 
@@ -78,9 +78,11 @@ public class Interprete {
                 System.out.println(token);
             }
 
-            ASDI asdi = new ASDI(tokens);
-            asdi.analizar();
-            
+            //ASDI asdi = new ASDI(tokens);
+            //asdi.analizar();
+            ASCA asca = new ASCA(tokens);
+            asca.analizar();
+
         } catch (Exception ex) {
             ex.printStackTrace(); // Imprime la traza de la excepción en caso de error
         }

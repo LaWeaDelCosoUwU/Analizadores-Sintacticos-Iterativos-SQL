@@ -21,6 +21,9 @@ public class Scanner {
         palabrasReservadas.put("SELECT", TipoToken.SELECT);
         palabrasReservadas.put("DISTINCT", TipoToken.DISTINCT);
         palabrasReservadas.put("FROM", TipoToken.FROM);
+        palabrasReservadas.put("select", TipoToken.SELECT);
+        palabrasReservadas.put("distinct", TipoToken.DISTINCT);
+        palabrasReservadas.put("from", TipoToken.FROM);
     }
 
     public List<Token> scan() throws Exception {
