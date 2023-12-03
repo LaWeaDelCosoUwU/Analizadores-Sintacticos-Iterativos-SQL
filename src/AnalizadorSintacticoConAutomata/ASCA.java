@@ -20,15 +20,14 @@ public class ASCA {
         int i = 0, estado = 0;
         boolean error = false;
 
-        while((i<tokens.size())&&(!error)){
+        while((tokens.get(i).getTipo()!=TipoToken.EOF)&&(!error)){
 
             switch (estado){
 
                 case 0:
-                    System.out.println("Estoy en el estado: "+estado);
+
                     if(tokens.get(i).getTipo()==TipoToken.SELECT) {
                         estado = 1;
-                        System.out.println("Tipo coso: "+tokens.get(i).getTipo().toString());
                         i++;
                     }else{
                         estado = 12;
@@ -39,7 +38,6 @@ public class ASCA {
                     break;
 
                 case 1:
-                    System.out.println("Estoy en el estado: "+estado);
 
                     if(tokens.get(i).getTipo()==TipoToken.DISTINCT) {
                         estado = 2;
@@ -57,7 +55,6 @@ public class ASCA {
                     break;
 
                 case 2:
-                    System.out.println("Estoy en el estado: "+estado);
 
                     if(tokens.get(i).getTipo()==TipoToken.IDENTIFIER){
                         estado = 3;
@@ -69,7 +66,6 @@ public class ASCA {
                     break;
 
                 case 3:
-                    System.out.println("Estoy en el estado: "+estado);
 
                     if(tokens.get(i).getTipo()==TipoToken.DOT) {
                         estado = 5;
@@ -86,7 +82,6 @@ public class ASCA {
                     break;
 
                 case 4:
-                    System.out.println("Estoy en el estado: "+estado);
 
                     if(tokens.get(i).getTipo()==TipoToken.FROM){
                         estado = 8;
@@ -97,7 +92,6 @@ public class ASCA {
                     break;
 
                 case 5:
-                    System.out.println("Estoy en el estado: "+estado);
 
                     if (tokens.get(i).getTipo() == TipoToken.IDENTIFIER) {
                         estado = 7;
@@ -108,7 +102,6 @@ public class ASCA {
                     break;
 
                 case 6:
-                    System.out.println("Estoy en el estado: "+estado);
 
                     if(tokens.get(i).getTipo()==TipoToken.IDENTIFIER) {
                         estado = 3;
@@ -119,7 +112,6 @@ public class ASCA {
                     break;
 
                 case 7:
-                    System.out.println("Estoy en el estado: "+estado);
 
                     if(tokens.get(i).getTipo()==TipoToken.COMMA) {
                         estado = 6;
@@ -133,7 +125,6 @@ public class ASCA {
                     break;
 
                 case 8:
-                    System.out.println("Estoy en el estado: "+estado);
 
                     if(tokens.get(i).getTipo()==TipoToken.IDENTIFIER){
                         estado = 9;
@@ -144,7 +135,6 @@ public class ASCA {
                     break;
 
                 case 9:
-                    System.out.println("Estoy en el estado: "+estado);
 
                     if(tokens.get(i).getTipo()==TipoToken.COMMA) {
                         estado = 10;
@@ -155,7 +145,6 @@ public class ASCA {
                     break;
 
                 case 10:
-                    System.out.println("Estoy en el estado: "+estado);
 
                     if(tokens.get(i).getTipo()==TipoToken.IDENTIFIER){
                         estado = 9;
@@ -175,7 +164,7 @@ public class ASCA {
         }
 
         if(!error){
-            System.out.println("Si Jala");
+            System.out.println("Si Jala ASCA");
         }
 
     }

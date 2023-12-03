@@ -94,6 +94,8 @@ public class Scanner {
             }
         }
 
+        tokens.add(new Token(TipoToken.EOF, "", source.length()));
+
         return tokens;
     }
 
