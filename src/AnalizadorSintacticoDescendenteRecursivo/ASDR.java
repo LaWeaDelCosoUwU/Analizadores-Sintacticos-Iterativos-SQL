@@ -8,7 +8,7 @@ import java.util.List;
 public class ASDR {
 
     private final List<Token> tokens;
-    private boolean error = false, finale = false;
+    private boolean error = false;
     private int i = 0;
     public ASDR(List<Token> tokens) {
 
@@ -18,11 +18,9 @@ public class ASDR {
 
     public void analizar(){
 
-        System.out.println(""+tokens.size()+""+i);
-
         Q();
 
-        if(!error)
+        if(!error && tokens.get(i).getTipo()==TipoToken.EOF)
             System.out.println("Si Jala ASDR");
         else
             System.out.println("No Jala");
@@ -31,8 +29,6 @@ public class ASDR {
 
     //Q ->  SELECT D FROM T
     private void Q() {
-
-        System.out.println(""+i);
 
         match(TipoToken.SELECT);
         D();
@@ -175,12 +171,8 @@ public class ASDR {
 
     private void match(TipoToken t){
 
-        System.out.println(""+i);
-
         if(tokens.get(i).getTipo() == t){
             i++;
-            if(i==tokens.size()+1)
-                finale = true;
         }else
             error = true;
 

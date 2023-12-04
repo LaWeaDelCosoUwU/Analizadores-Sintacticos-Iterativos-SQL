@@ -25,12 +25,12 @@ public class ASDI {
         tabla.put("P", crearFila("ERROR",           "ERROR",       "*",         "A",         "ERROR",     "ERROR",     "ERROR",   "ERROR"));
         tabla.put("A", crearFila("ERROR",           "ERROR",       "ERROR",     "A2 A1",     "ERROR",     "ERROR",     "ERROR",   "ERROR"));
         tabla.put("A1", crearFila("ERROR",          "ERROR",       "ERROR",     "ERROR",     "ERROR",     ", A",       "EPS",     "ERROR"));
-        tabla.put("A2", crearFila("ERROR",          "ERROR",       "ERROR",     "id A3",     "ERROR",     "ERROR",     "ERROR",   "ERROR"));
-        tabla.put("A3", crearFila("ERROR",          "ERROR",       "ERROR",     "ERROR",     ". id",      "EPS",       "EPS",     "ERROR"));
+        tabla.put("A2", crearFila("ERROR",          "ERROR",       "ERROR",     "IDENTIFIER A3",     "ERROR",     "ERROR",     "ERROR",   "ERROR"));
+        tabla.put("A3", crearFila("ERROR",          "ERROR",       "ERROR",     "ERROR",     ". IDENTIFIER",      "EPS",       "EPS",     "ERROR"));
         tabla.put("T", crearFila("ERROR",           "ERROR",       "ERROR",     "T1 T2",     "ERROR",     "ERROR",     "ERROR",   "ERROR"));
         tabla.put("T1", crearFila("ERROR",          "ERROR",       "ERROR",     "ERROR",     "ERROR",     ", T",       "ERROR",   "EPS"));
-        tabla.put("T2", crearFila("ERROR",          "ERROR",       "ERROR",     "id T3",     "ERROR",     "ERROR",     "ERROR",   "ERROR"));
-        tabla.put("T3", crearFila("ERROR",          "ERROR",       "ERROR",     "id",        "EPS",       "ERROR",     "ERROR",   "EPS"));
+        tabla.put("T2", crearFila("ERROR",          "ERROR",       "ERROR",     "IDENTIFIER T3",     "ERROR",     "ERROR",     "ERROR",   "ERROR"));
+        tabla.put("T3", crearFila("ERROR",          "ERROR",       "ERROR",     "IDENTIFIER",        "EPS",       "ERROR",     "ERROR",   "EPS"));
 
     }
 
@@ -57,14 +57,7 @@ public class ASDI {
         pila.push("Q");
 
 
-        while(!pila.peek().equals("$")) {
-
-            if(i == tokens.size()-1){
-
-                System.out.println("No Jala");
-                return;
-
-            }
+        while(!pila.peek().equals("$") && tokens.get(i).getTipo()!=TipoToken.EOF) {
 
             if (tokens.get(i).getTipo() == TipoToken.SELECT){
                 column = "SELECT";
@@ -84,38 +77,33 @@ public class ASDI {
                 column = "$";
             }
 
-            if(pila.peek().equals(column)){
+            objetoPila = pila.pop();
+            busquedaTabla = tabla.get(objetoPila).get(column);
 
+            if(busquedaTabla.equals("ERROR")){
+                System.out.println("No jala por error "+i);
+                return;
+            }else if(objetoPila.equals(busquedaTabla)){
+                i++;
+            }else if(busquedaTabla.indexOf(' ') != -1){
+
+                cadenaDividida = busquedaTabla.split(" ");
+
+                for(j=cadenaDividida.length; j>0; j--)
+                    pila.push(cadenaDividida[j-1]);
+
+            }else
+                pila.push(busquedaTabla);
+
+            if(pila.peek().equals(tokens.get(i).getTipo().toString()) || pila.peek().equals(tokens.get(i).getLexema().toUpperCase())){
                 pila.pop();
                 i++;
-
-            }else{
-
-                objetoPila = pila.pop();
-                busquedaTabla = tabla.get(objetoPila).get(column);
-
-
-                if(busquedaTabla.equals("ERROR")){
-                    System.out.println("No jala");
-                    return;
-                } else if(busquedaTabla.equals("EPS")){
-
-                }else if(busquedaTabla.indexOf(' ') != -1){
-
-                    cadenaDividida = busquedaTabla.split(" ");
-
-                    for(j=cadenaDividida.length; j>0; j--)
-                        pila.push(cadenaDividida[j-1]);
-
-                }else{
-
-                    pila.push(busquedaTabla);
-
-                }
-
             }
 
         }
+
+        if(pila.peek().equals("$") && tokens.get(i).getTipo() == TipoToken.EOF)
+            System.out.println("Si Jala ASDI");
 
     }
 

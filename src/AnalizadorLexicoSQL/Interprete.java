@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import src.AnalizadorSintacticoConAutomata.ASCA;
+import src.AnalizadorSintacticoDescendenteIterativo.ASDI;
 import src.AnalizadorSintacticoDescendenteRecursivo.ASDR;
 
 public class Interprete {
@@ -75,12 +76,13 @@ public class Interprete {
             List<Token> tokens = scanner.scan();
 
             // Imprime cada token en la consola
-            for (Token token : tokens) {
-                System.out.println(token);
-            }
+            //for (Token token : tokens) {
+            //    System.out.println(token);
+            //}
 
             //ASDI asdi = new ASDI(tokens);
             //asdi.analizar();
+
             ASCA asca = new ASCA(tokens);
             asca.analizar();
 
